@@ -1,0 +1,8 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1400" viewBox="0 0 900 1400">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4A1528"/><stop offset="1" stop-color="#8B1538"/>
+  </linearGradient></defs>
+  <rect width="900" height="1400" fill="url(#g)"/>
+  <circle cx="650" cy="300" r="220" fill="#C68A9B" opacity="0.15"/>
+  <text x="450" y="1300" font-family="Georgia, serif" font-style="italic" font-size="44" fill="#F7F2ED" text-anchor="middle" opacity="0.6">Foto de fondo de la pareja</text>
+</svg>
