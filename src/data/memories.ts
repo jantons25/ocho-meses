@@ -22,8 +22,8 @@ export const MEMORIES: Memory[] = [
   },
   {
     type: 'photo',
-    title: 'Atardecer en Pimentel',
-    text: 'El mar de testigo y tú de protagonista.',
+    title: 'Atardecer en Arequipa',
+    text: 'El volcán de testigo y tú de protagonista.',
     src: '/photos/img010.webp',
   },
   {

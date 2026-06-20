@@ -256,3 +256,168 @@ a:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ====================================================================
+   TravelMapSection — mapa decorativo del Perú (estilo marquetería).
+   Bloque autocontenido: solo clases nuevas con prefijo .tm-, no altera
+   ninguna regla previa.
+   ==================================================================== */
+.tm-stage {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 1.8rem auto 0;
+}
+
+.tm-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 18px 40px rgba(110, 15, 44, 0.16));
+}
+
+/* ---- piezas (departamentos) ---- */
+.tm-region {
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+  filter: drop-shadow(0 2px 3px rgba(110, 15, 44, 0.12));
+}
+
+.tm-region:hover,
+.tm-region:focus-visible {
+  transform: scale(1.035);
+  filter: drop-shadow(0 10px 16px rgba(110, 15, 44, 0.3));
+  outline: none;
+}
+
+.tm-region-shape {
+  fill: #fffdf9;
+  stroke: var(--rose-light);
+  stroke-width: 2.4;
+}
+
+.tm-region:hover .tm-region-shape,
+.tm-region:focus-visible .tm-region-shape {
+  fill: var(--paper);
+}
+
+.tm-region-outline {
+  fill: none;
+  stroke: var(--rose);
+  stroke-width: 2.4;
+  pointer-events: none;
+  transition: stroke 0.4s ease, stroke-width 0.4s ease;
+}
+
+.tm-region:hover .tm-region-outline,
+.tm-region:focus-visible .tm-region-outline {
+  stroke: var(--burgundy);
+  stroke-width: 3.4;
+}
+
+/* ---- nombres ---- */
+.tm-label {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  fill: var(--ink);
+  pointer-events: none;
+  letter-spacing: 0.01em;
+}
+
+.tm-label-over {
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--paper);
+  paint-order: stroke;
+  stroke: rgba(74, 37, 48, 0.6);
+  stroke-width: 3.2;
+  stroke-linejoin: round;
+}
+
+/* ---- placa "Nuestras Aventuras" ---- */
+.tm-plaque {
+  position: absolute;
+  /* la mitad de la tarjeta queda sobre el borde izquierdo del mapa */
+  left: 0;
+  transform: translateX(-50%);
+  bottom: 7%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 1.2rem;
+  background: var(--paper-alt);
+  border: 1px solid var(--rose);
+  outline: 1px solid rgba(139, 21, 56, 0.35);
+  outline-offset: 4px;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(110, 15, 44, 0.18);
+  max-width: 56%;
+}
+
+.tm-plaque-title {
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  line-height: 1.05;
+  color: var(--burgundy);
+}
+
+.tm-plaque-sub {
+  font-family: var(--font-hand);
+  font-size: clamp(0.85rem, 3.4vw, 1.05rem);
+  color: var(--ink);
+}
+
+/* ---- decoraciones (avión, palmera, maleta, brújula) ---- */
+.tm-decorations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tm-deco {
+  position: absolute;
+  width: clamp(30px, 8vw, 44px);
+  height: auto;
+  opacity: 0.55;
+}
+
+.tm-deco-palm {
+  top: -3%;
+  left: -4%;
+}
+
+.tm-deco-plane {
+  top: 30%;
+  left: -7%;
+}
+
+.tm-deco-bag {
+  top: 6%;
+  right: -5%;
+}
+
+.tm-deco-compass {
+  bottom: 16%;
+  right: -6%;
+}
+
+/* ---- responsive: la placa pasa a flujo normal en móvil ---- */
+@media (max-width: 480px) {
+  .tm-plaque {
+    position: static;
+    transform: none;
+    max-width: none;
+    margin: 1.1rem auto 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .tm-deco-plane,
+  .tm-deco-compass {
+    display: none;
+  }
+}

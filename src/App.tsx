@@ -16,6 +16,7 @@ const LilyGardenSection = lazy(() => import('./components/sections/LilyGardenSec
 const PhraseRainSection = lazy(() => import('./components/sections/PhraseRainSection'));
 const MapSection = lazy(() => import('./components/sections/MapSection'));
 const MemoriesSection = lazy(() => import('./components/sections/MemoriesSection'));
+const TravelMapSection = lazy(() => import('./components/sections/TravelMapSection'));
 const FinaleSection = lazy(() => import('./components/sections/FinaleSection'));
 
 export default function App() {
@@ -69,6 +70,10 @@ export default function App() {
 
       <LazySection minHeight="90vh">
         <MemoriesSection />
+      </LazySection>
+
+      <LazySection minHeight="120vh">
+        <TravelMapSection />
       </LazySection>
 
       <LazySection minHeight="100vh">

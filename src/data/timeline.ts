@@ -65,4 +65,11 @@ export const TIMELINE: TimelineEvent[] = [
     image: '/photos/img013.webp',
     shape: 'heart',
   },
+  {
+    date: '17 · Junio · 2026',
+    title: 'Tarapoto, nueva aventura',
+    description: 'Increible sol, paisaje y sobre todo compartiendo nuestro amor.',
+    image: '/photos/img-019.webp',
+    shape: 'polaroid',
+  },
 ];
