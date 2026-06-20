@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Reveal } from '../common/Reveal';
 import { Divider } from '../common/Divider';
 import {
@@ -31,6 +31,31 @@ export default function TravelMapSection({
   // pieza elevada quede por encima de sus vecinas. No re-renderiza las piezas.
   const [active, setActive] = useState<string | null>(null);
 
+  // ---- descarga como JPG ----
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [downloading, setDownloading] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const handleDownload = useCallback(async () => {
+    const stage = stageRef.current;
+    if (!stage || downloading) return;
+
+    setDownloading(true);
+    setDone(false);
+    try {
+      // El módulo de exportación (sin dependencias) se carga solo bajo
+      // demanda: no afecta al bundle inicial.
+      const { exportTravelMapToJpeg } = await import('./exportTravelMap');
+      await exportTravelMapToJpeg(stage, 'mapa-peru-aventuras.jpg');
+      setDone(true);
+      setTimeout(() => setDone(false), 2500);
+    } catch {
+      // fallo silencioso: no rompe ninguna funcionalidad existente
+    } finally {
+      setDownloading(false);
+    }
+  }, [downloading]);
+
   const handleSelect = useCallback(
     (region: TravelRegion) => {
       onRegionClick?.(region);
@@ -58,7 +83,49 @@ export default function TravelMapSection({
       </Reveal>
 
       <Reveal delay={0.15}>
-        <div className="tm-stage">
+        <div className="tm-stage" ref={stageRef}>
+          {/* botón excluido de la captura via .tm-no-capture */}
+          <button
+            className={[
+              'tm-download-btn',
+              'tm-no-capture',
+              downloading ? 'tm-download-btn--loading' : '',
+              done ? 'tm-download-btn--done' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            onClick={handleDownload}
+            disabled={downloading}
+            aria-label={
+              downloading ? 'Generando imagen…' : done ? '¡Descargado!' : 'Descargar mapa'
+            }
+            title={downloading ? 'Generando…' : done ? '¡Listo!' : 'Descargar mapa como imagen'}
+          >
+            {downloading ? (
+              <span className="tm-download-spinner" aria-hidden="true" />
+            ) : done ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M3 8L6.5 11.5L13 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M8 2v8M5 7l3 3 3-3M3 12h10"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+          </button>
+
           <TravelDecorations />
 
           <svg
